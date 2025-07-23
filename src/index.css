@@ -425,6 +425,83 @@ All colors MUST be HSL.
   }
 }
 
+@keyframes circuit-pulse {
+  0%, 100% { 
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes data-stream {
+  0% {
+    transform: translateX(-100%) translateY(-50%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) translateY(-50%);
+    opacity: 0;
+  }
+}
+
+@keyframes brain-connections {
+  0%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 0.6;
+  }
+  50% {
+    stroke-dashoffset: -20;
+    opacity: 1;
+  }
+}
+
+@keyframes analytics-bars {
+  0% {
+    transform: scaleY(0.3);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0.7);
+    opacity: 0.8;
+  }
+}
+
+@keyframes lightning-bolt {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1);
+  }
+  25% {
+    transform: scale(1.1) rotate(-2deg);
+    filter: brightness(1.3);
+  }
+  75% {
+    transform: scale(1.05) rotate(2deg);
+    filter: brightness(1.2);
+  }
+}
+
+@keyframes card-rise {
+  from {
+    opacity: 0;
+    transform: translateY(50px) rotateX(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
 @layer components {
   .neural-connection {
     position: absolute;
@@ -683,5 +760,66 @@ All colors MUST be HSL.
     );
     background-size: 20px 20px;
     animation: holographic-scan 3s linear infinite;
+  }
+
+  .circuit-board-bg {
+    background-image: 
+      linear-gradient(90deg, hsl(var(--electric-blue) / 0.1) 1px, transparent 1px),
+      linear-gradient(hsl(var(--electric-blue) / 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 25% 25%, hsl(var(--electric-blue) / 0.2) 2px, transparent 2px),
+      radial-gradient(circle at 75% 75%, hsl(var(--cyan-glow) / 0.15) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px, 80px 80px, 60px 60px;
+    animation: circuit-pulse 8s ease-in-out infinite;
+  }
+
+  .advantage-card {
+    animation: card-rise 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(50px) rotateX(-10deg);
+  }
+
+  .advantage-card.revealed {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+
+  .advantage-card:hover {
+    transform: translateY(-10px) rotateX(5deg) rotateY(2deg);
+    box-shadow: 0 20px 40px hsl(var(--electric-blue) / 0.3);
+  }
+
+  .brain-icon {
+    animation: brain-connections 3s ease-in-out infinite;
+  }
+
+  .analytics-icon {
+    animation: analytics-bars 2s ease-in-out infinite;
+  }
+
+  .lightning-icon {
+    animation: lightning-bolt 1.5s ease-in-out infinite;
+  }
+
+  .data-stream-line {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, hsl(var(--electric-blue)), transparent);
+    animation: data-stream 4s ease-in-out infinite;
+    top: 50%;
+    left: 0;
+    right: 0;
+  }
+
+  .floating-data-viz {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .before-after-toggle {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .comparison-slide {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
