@@ -4,6 +4,7 @@ import DigitalSmartCards from '@/components/DigitalSmartCards';
 import CompanySection from '@/components/CompanySection';
 import ProductShowcase from '@/components/ProductShowcase';
 import WhyChooseUs from '@/components/WhyChooseUs';
+import ContactSection from '@/components/ContactSection';
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <CompanySection />
       <ProductShowcase />
       <WhyChooseUs />
+      <ContactSection />
     </div>
   );
 };
