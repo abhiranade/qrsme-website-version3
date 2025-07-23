@@ -8,46 +8,47 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Dark theme base colors */
-    --background: 222 47% 7%;
+    /* Modern tech color palette */
+    --background: 222 47% 4%;
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 8%;
+    --card: 222 47% 6%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 8%;
+    --popover: 222 47% 6%;
     --popover-foreground: 210 40% 98%;
 
-    /* AI-inspired electric blue primary */
+    /* Refined AI-inspired electric blue primary */
     --primary: 192 100% 50%;
-    --primary-foreground: 222 47% 7%;
+    --primary-foreground: 222 47% 4%;
 
-    /* Dark secondary with blue tint */
-    --secondary: 222 47% 12%;
+    /* Updated secondary with navy tint */
+    --secondary: 222 47% 8%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 222 47% 10%;
+    --muted: 222 47% 7%;
     --muted-foreground: 215 20% 65%;
 
-    /* Cyan accent for AI elements */
-    --accent: 180 100% 60%;
-    --accent-foreground: 222 47% 7%;
+    /* Enhanced cyan accent */
+    --accent: 192 100% 50%;
+    --accent-foreground: 222 47% 4%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 222 47% 15%;
-    --input: 222 47% 12%;
+    --border: 222 47% 12%;
+    --input: 222 47% 8%;
     --ring: 192 100% 50%;
 
     --radius: 0.75rem;
 
-    /* Custom AI theme colors */
+    /* Enhanced AI theme colors matching specification */
     --electric-blue: 192 100% 50%;
-    --cyan-glow: 180 100% 60%;
-    --purple-accent: 260 100% 70%;
-    --dark-navy: 222 47% 7%;
-    --darker-navy: 222 47% 4%;
+    --cyan-glow: 192 100% 50%;
+    --purple-accent: 260 76% 68%;
+    --violet-accent: 260 76% 68%;
+    --dark-navy: 222 47% 4%;
+    --darker-navy: 222 47% 2%;
 
     /* Gradients */
     --gradient-ai: linear-gradient(135deg, hsl(var(--electric-blue)), hsl(var(--cyan-glow)));
@@ -126,6 +127,26 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    scroll-behavior: smooth;
+  }
+
+  /* Noise texture overlay for depth */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(circle at 25% 25%, hsl(var(--electric-blue) / 0.02) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, hsl(var(--cyan-glow) / 0.015) 1px, transparent 1px);
+    background-size: 50px 50px, 30px 30px;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.6;
   }
 }
 
@@ -934,5 +955,71 @@ All colors MUST be HSL.
 
   .cta-enhanced {
     animation: cta-glow 2.5s ease-in-out infinite;
+  }
+
+  /* Footer and Back-to-Top Animations */
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: var(--gradient-ai);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(100px) scale(0.8);
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .back-to-top:hover {
+    transform: translateY(-8px) scale(1.1);
+    box-shadow: var(--glow-electric);
+  }
+
+  .rocket-icon {
+    animation: rocket-hover 2s ease-in-out infinite;
+  }
+
+  .footer-logo {
+    animation: footer-logo-pulse 3s ease-in-out infinite;
+  }
+
+  .social-icon {
+    transition: var(--transition-glow);
+  }
+
+  .social-icon:hover {
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: var(--glow-electric);
+  }
+}
+
+@keyframes rocket-hover {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes footer-logo-pulse {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
   }
 }

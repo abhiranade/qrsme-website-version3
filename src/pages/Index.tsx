@@ -5,6 +5,7 @@ import CompanySection from '@/components/CompanySection';
 import ProductShowcase from '@/components/ProductShowcase';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import ContactSection from '@/components/ContactSection';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
       <ProductShowcase />
       <WhyChooseUs />
       <ContactSection />
+      <Footer />
     </div>
   );
 };
