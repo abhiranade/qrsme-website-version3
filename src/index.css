@@ -306,6 +306,57 @@ All colors MUST be HSL.
   100% { left: 100%; }
 }
 
+@keyframes counter-up {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes brain-pulse {
+  0%, 100% { 
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes circuit-flow {
+  0% {
+    stroke-dashoffset: 1000;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.7;
+  }
+}
+
+@keyframes data-float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.7;
+  }
+  33% {
+    transform: translateY(-10px) translateX(5px) scale(1.1);
+    opacity: 1;
+  }
+  66% {
+    transform: translateY(5px) translateX(-5px) scale(0.9);
+    opacity: 0.8;
+  }
+}
+
 @layer components {
   .neural-connection {
     position: absolute;
@@ -414,5 +465,56 @@ All colors MUST be HSL.
       transparent
     );
     animation: qr-scan 2s infinite ease-in-out;
+  }
+
+  .circuit-pattern {
+    background-image: 
+      radial-gradient(circle at 2px 2px, hsl(var(--electric-blue) / 0.15) 1px, transparent 0),
+      linear-gradient(90deg, hsl(var(--electric-blue) / 0.05) 1px, transparent 1px),
+      linear-gradient(hsl(var(--electric-blue) / 0.05) 1px, transparent 1px);
+    background-size: 30px 30px, 30px 30px, 30px 30px;
+    animation: qr-float 25s infinite linear;
+  }
+
+  .brain-network {
+    animation: brain-pulse 4s ease-in-out infinite;
+  }
+
+  .data-point {
+    animation: data-float 4s ease-in-out infinite;
+  }
+
+  .data-point:nth-child(2) {
+    animation-delay: -1s;
+  }
+
+  .data-point:nth-child(3) {
+    animation-delay: -2s;
+  }
+
+  .data-point:nth-child(4) {
+    animation-delay: -3s;
+  }
+
+  .circuit-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: circuit-flow 6s ease-in-out infinite;
+  }
+
+  .circuit-line:nth-child(2) {
+    animation-delay: -2s;
+  }
+
+  .circuit-line:nth-child(3) {
+    animation-delay: -4s;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 10px hsl(var(--electric-blue) / 0.5);
+  }
+
+  .counter-animation {
+    animation: counter-up 1s ease-out forwards;
   }
 }

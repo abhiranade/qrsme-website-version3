@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import DigitalSmartCards from '@/components/DigitalSmartCards';
+import CompanySection from '@/components/CompanySection';
 
 const Index = () => {
   return (
@@ -8,6 +9,7 @@ const Index = () => {
       <Header />
       <HeroSection />
       <DigitalSmartCards />
+      <CompanySection />
     </div>
   );
 };
