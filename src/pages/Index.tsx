@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import DigitalSmartCards from '@/components/DigitalSmartCards';
 import CompanySection from '@/components/CompanySection';
+import ProductShowcase from '@/components/ProductShowcase';
 
 const Index = () => {
   return (
@@ -10,6 +11,7 @@ const Index = () => {
       <HeroSection />
       <DigitalSmartCards />
       <CompanySection />
+      <ProductShowcase />
     </div>
   );
 };
