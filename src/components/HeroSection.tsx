@@ -1,195 +1,272 @@
-import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { useEffect, useRef, useState } from 'react';
+import { ChevronRight } from 'lucide-react';
 
 const HeroSection = () => {
-  const [typedText, setTypedText] = useState('');
-  const fullText = 'Transform Static QR Codes into Intelligent Business Solutions';
-  
-  useEffect(() => {
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setTypedText(fullText.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(typingInterval);
-      }
-    }, 100);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState(false);
 
-    return () => clearInterval(typingInterval);
+  useEffect(() => {
+    setIsVisible(true);
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        setMousePosition({
+          x: (e.clientX - rect.left) / rect.width,
+          y: (e.clientY - rect.top) / rect.height,
+        });
+      }
+    };
+
+    const heroElement = heroRef.current;
+    if (heroElement) {
+      heroElement.addEventListener('mousemove', handleMouseMove);
+      return () => heroElement.removeEventListener('mousemove', handleMouseMove);
+    }
   }, []);
 
-  // Particle system
-  const particles = Array.from({ length: 12 }, (_, i) => ({
-    id: i,
-    size: Math.random() * 4 + 2,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    delay: Math.random() * 6,
-  }));
-
-  // Floating shapes
-  const shapes = [
-    { type: 'triangle', size: 40, x: 10, y: 20 },
-    { type: 'circle', size: 30, x: 85, y: 15 },
-    { type: 'square', size: 35, x: 15, y: 70 },
-    { type: 'hexagon', size: 45, x: 80, y: 75 },
-  ];
+  const handleScrollToSection = () => {
+    const productSection = document.getElementById('product-line');
+    if (productSection) {
+      productSection.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-bg">
-      {/* Animated background patterns */}
-      <div className="absolute inset-0 qr-pattern opacity-20" />
-      <div className="absolute inset-0 bg-gradient-hero" />
-      
-      {/* Particle system */}
-      {particles.map((particle) => (
-        <div
-          key={particle.id}
-          className="particle"
-          style={{
-            left: `${particle.x}%`,
-            top: `${particle.y}%`,
-            width: `${particle.size}px`,
-            height: `${particle.size}px`,
-            animationDelay: `${particle.delay}s`,
-          }}
-        />
-      ))}
-
-      {/* Floating geometric shapes */}
-      {shapes.map((shape, index) => (
-        <div
-          key={index}
-          className="floating-shape absolute opacity-20"
-          style={{
-            left: `${shape.x}%`,
-            top: `${shape.y}%`,
-            width: `${shape.size}px`,
-            height: `${shape.size}px`,
-          }}
-        >
-          {shape.type === 'triangle' && (
-            <div 
-              className="w-0 h-0 border-l-[20px] border-r-[20px] border-b-[35px] border-l-transparent border-r-transparent border-b-electric-blue"
-              style={{ borderBottomWidth: `${shape.size}px`, borderLeftWidth: `${shape.size * 0.6}px`, borderRightWidth: `${shape.size * 0.6}px` }}
-            />
-          )}
-          {shape.type === 'circle' && (
-            <div className="w-full h-full rounded-full border-2 border-cyan-glow" />
-          )}
-          {shape.type === 'square' && (
-            <div className="w-full h-full border-2 border-purple-accent transform rotate-45" />
-          )}
-          {shape.type === 'hexagon' && (
-            <div className="w-full h-full bg-electric-blue/20 transform rotate-30 clip-path-hexagon" />
-          )}
-        </div>
-      ))}
-
-      {/* QR Code network pattern overlay */}
-      <div className="absolute inset-0 opacity-10">
-        <svg className="w-full h-full" viewBox="0 0 1000 1000">
+    <section 
+      ref={heroRef}
+      className="relative min-h-screen flex items-center overflow-hidden bg-background"
+      style={{
+        background: `
+          radial-gradient(circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, 
+            hsl(var(--electric-blue) / 0.1) 0%, 
+            transparent 50%),
+          linear-gradient(135deg, 
+            hsl(var(--background)) 0%, 
+            hsl(var(--background)) 100%)
+        `
+      }}
+    >
+      {/* Animated Neural Network Background */}
+      <div className="absolute inset-0 opacity-20">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--electric-blue))" />
-              <stop offset="100%" stopColor="hsl(var(--cyan-glow))" />
+            <pattern id="qr-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <rect width="40" height="40" fill="none" stroke="hsl(var(--electric-blue))" strokeWidth="0.5" opacity="0.3"/>
+              <rect x="10" y="10" width="5" height="5" fill="hsl(var(--electric-blue))" opacity="0.2">
+                <animate attributeName="opacity" values="0.2;0.6;0.2" dur="3s" repeatCount="indefinite"/>
+              </rect>
+              <rect x="25" y="25" width="5" height="5" fill="hsl(var(--cyan-glow))" opacity="0.2">
+                <animate attributeName="opacity" values="0.2;0.5;0.2" dur="4s" repeatCount="indefinite"/>
+              </rect>
+            </pattern>
+            
+            <linearGradient id="neural-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="hsl(var(--electric-blue))" stopOpacity="0.6"/>
+              <stop offset="50%" stopColor="hsl(var(--purple-accent))" stopOpacity="0.4"/>
+              <stop offset="100%" stopColor="hsl(var(--cyan-glow))" stopOpacity="0.6"/>
             </linearGradient>
           </defs>
           
-          {/* Animated connection lines */}
-          {[...Array(8)].map((_, i) => (
-            <line
-              key={i}
-              x1={Math.random() * 1000}
-              y1={Math.random() * 1000}
-              x2={Math.random() * 1000}
-              y2={Math.random() * 1000}
-              stroke="url(#lineGradient)"
-              strokeWidth="1"
-              opacity="0.6"
-              className="animate-pulse"
-              style={{ animationDelay: `${i * 0.5}s` }}
-            />
-          ))}
+          <rect width="100%" height="100%" fill="url(#qr-grid)"/>
           
-          {/* Network nodes */}
-          {[...Array(15)].map((_, i) => (
-            <circle
-              key={i}
-              cx={Math.random() * 1000}
-              cy={Math.random() * 1000}
-              r="3"
-              fill="hsl(var(--electric-blue))"
-              className="animate-pulse"
-              style={{ animationDelay: `${i * 0.3}s` }}
-            />
+          {/* Neural Network Lines */}
+          {[...Array(12)].map((_, i) => (
+            <g key={i}>
+              <line
+                x1={`${(i * 8.33)}%`}
+                y1="0%"
+                x2={`${(i * 8.33 + 20)}%`}
+                y2="100%"
+                stroke="url(#neural-gradient)"
+                strokeWidth="1"
+                opacity="0.3"
+              >
+                <animate
+                  attributeName="opacity"
+                  values="0.1;0.5;0.1"
+                  dur={`${3 + i * 0.2}s`}
+                  repeatCount="indefinite"
+                />
+              </line>
+              <circle
+                cx={`${(i * 8.33 + 10)}%`}
+                cy={`${20 + (i * 5)}%`}
+                r="2"
+                fill="hsl(var(--electric-blue))"
+                opacity="0.4"
+              >
+                <animate
+                  attributeName="r"
+                  values="2;4;2"
+                  dur={`${2 + i * 0.1}s`}
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </g>
           ))}
         </svg>
       </div>
 
-      {/* Main content */}
-      <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
-        {/* Main headline with typewriter effect */}
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight">
-          <span className="typewriter inline-block">
-            {typedText}
-            {typedText.includes('Intelligent') && (
-              <span className="holographic font-extrabold">Intelligent</span>
-            )}
-          </span>
-        </h1>
+      {/* Floating Particles */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-electric-blue rounded-full opacity-60 particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`
+            }}
+          />
+        ))}
+      </div>
 
-        {/* Subtext */}
-        <p className="text-lg md:text-xl lg:text-2xl text-muted-foreground mb-12 max-w-4xl mx-auto leading-relaxed">
-          Experience the power of{' '}
-          <span className="ai-text-gradient font-semibold">QRS-Me's revolutionary AI technology</span>{' '}
-          that turns ordinary QR codes into dynamic, personalized interactions that captivate users and drive unprecedented engagement.
-        </p>
-
-        {/* CTA Button */}
-        <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-          <Button 
-            variant="ai" 
-            size="xl"
-            className="relative group overflow-hidden"
-          >
-            <span className="relative z-10 flex items-center gap-3">
-              Explore Our Solutions
-              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-glow to-purple-accent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </Button>
-
-          <Button 
-            variant="ai-outline" 
-            size="xl"
-            className="group"
-          >
-            <span className="flex items-center gap-3">
-              Watch Demo
-              <svg className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.586a1 1 0 01.707.293l.707.707a1 1 0 00.707.293H15" />
-              </svg>
-            </span>
-          </Button>
-        </div>
-
-        {/* Stats or indicators */}
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-8 mt-16 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-electric-blue rounded-full animate-pulse" />
-            <span>AI-Powered Intelligence</span>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-center min-h-[80vh]">
+          
+          {/* Left Content - 60% */}
+          <div className="lg:col-span-3 space-y-8">
+            <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6">
+                Transform Static QR Codes into{' '}
+                <span className="ai-text-gradient block">
+                  Intelligent Business Solutions
+                </span>
+              </h1>
+            </div>
+            
+            <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground leading-relaxed mb-8">
+                Experience the power of <span className="ai-text-gradient font-semibold">QRS-Me's revolutionary AI technology</span> that turns ordinary QR codes 
+                into dynamic, personalized interactions that captivate users and drive unprecedented engagement.
+              </p>
+            </div>
+            
+            <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <button
+                onClick={handleScrollToSection}
+                className="group relative bg-gradient-to-r from-electric-blue via-purple-accent to-cyan-glow p-[2px] rounded-xl overflow-hidden"
+              >
+                <div className="relative bg-background px-8 py-4 rounded-[10px] flex items-center space-x-3 transition-all duration-300 group-hover:bg-transparent">
+                  <span className="text-lg font-semibold ai-text-gradient group-hover:text-white transition-all duration-300">
+                    Explore Our Solutions
+                  </span>
+                  <ChevronRight 
+                    size={24} 
+                    className="text-electric-blue group-hover:text-white transition-all duration-300 group-hover:translate-x-1" 
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-electric-blue via-purple-accent to-cyan-glow opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl blur-xl"></div>
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-cyan-glow rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
-            <span>Real-time Analytics</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-purple-accent rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-            <span>Seamless Integration</span>
+
+          {/* Right Visual Elements - 40% */}
+          <div className="lg:col-span-2 relative h-96 lg:h-[600px]">
+            
+            {/* Main Animated QR Code */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="qr-code-container relative">
+                <div className="qr-code-main">
+                  <svg width="200" height="200" viewBox="0 0 200 200" className="animate-spin" style={{ animationDuration: '20s' }}>
+                    <defs>
+                      <linearGradient id="qr-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="hsl(var(--electric-blue))" stopOpacity="0.8"/>
+                        <stop offset="50%" stopColor="hsl(var(--purple-accent))" stopOpacity="0.6"/>
+                        <stop offset="100%" stopColor="hsl(var(--cyan-glow))" stopOpacity="0.8"/>
+                      </linearGradient>
+                      <filter id="glow">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge> 
+                          <feMergeNode in="coloredBlur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+                    
+                    {/* QR Code Pattern */}
+                    {[...Array(15)].map((_, row) => 
+                      [...Array(15)].map((_, col) => {
+                        const shouldFill = Math.random() > 0.4;
+                        return shouldFill ? (
+                          <rect
+                            key={`${row}-${col}`}
+                            x={col * 12 + 10}
+                            y={row * 12 + 10}
+                            width="10"
+                            height="10"
+                            fill="url(#qr-gradient)"
+                            filter="url(#glow)"
+                            opacity="0.7"
+                          >
+                            <animate
+                              attributeName="opacity"
+                              values="0.7;1;0.7"
+                              dur={`${2 + Math.random() * 3}s`}
+                              repeatCount="indefinite"
+                            />
+                          </rect>
+                        ) : null;
+                      })
+                    )}
+                    
+                    {/* Corner markers */}
+                    <rect x="10" y="10" width="30" height="30" fill="none" stroke="hsl(var(--electric-blue))" strokeWidth="2"/>
+                    <rect x="160" y="10" width="30" height="30" fill="none" stroke="hsl(var(--purple-accent))" strokeWidth="2"/>
+                    <rect x="10" y="160" width="30" height="30" fill="none" stroke="hsl(var(--cyan-glow))" strokeWidth="2"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Geometric Shapes */}
+            <div className="absolute top-20 right-10 floating-shape">
+              <div className="w-8 h-8 border-2 border-electric-blue rotate-45 animate-pulse"></div>
+            </div>
+            
+            <div className="absolute bottom-20 left-10 floating-shape" style={{animationDelay: '1s'}}>
+              <div className="w-6 h-6 bg-purple-accent rounded-full animate-bounce"></div>
+            </div>
+            
+            <div className="absolute top-40 left-5 floating-shape" style={{animationDelay: '2s'}}>
+              <div className="w-4 h-12 bg-gradient-to-b from-cyan-glow to-electric-blue rounded-full animate-pulse"></div>
+            </div>
+
+            {/* Particle Connections */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="connection-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="hsl(var(--electric-blue))" stopOpacity="0.6"/>
+                  <stop offset="100%" stopColor="hsl(var(--purple-accent))" stopOpacity="0.3"/>
+                </linearGradient>
+              </defs>
+              
+              {[...Array(8)].map((_, i) => (
+                <line
+                  key={i}
+                  x1={`${20 + i * 10}%`}
+                  y1={`${30 + i * 8}%`}
+                  x2={`${60 + i * 5}%`}
+                  y2={`${70 - i * 6}%`}
+                  stroke="url(#connection-gradient)"
+                  strokeWidth="1"
+                  opacity="0.4"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="0.2;0.8;0.2"
+                    dur={`${3 + i * 0.3}s`}
+                    repeatCount="indefinite"
+                  />
+                </line>
+              ))}
+            </svg>
           </div>
         </div>
       </div>
