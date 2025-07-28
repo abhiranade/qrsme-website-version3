@@ -322,9 +322,13 @@ All colors MUST be HSL.
 }
 
 @keyframes qr-scan {
-  0% { left: -100%; }
-  50% { left: 100%; }
-  100% { left: 100%; }
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(3200%); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes counter-up {
@@ -691,6 +695,14 @@ All colors MUST be HSL.
       transparent
     );
     animation: qr-scan 2s infinite ease-in-out;
+  }
+
+  .animate-qr-scan {
+    animation: qr-scan 2s infinite ease-in-out;
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 4s linear infinite;
   }
 
   .circuit-pattern {

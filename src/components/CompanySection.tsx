@@ -125,35 +125,62 @@ const CompanySection = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           
-          {/* Left side: AI Brain Visualization */}
+          {/* Left side: AI-Enhanced QR Network Visualization */}
           <div className="relative">
-            <div className="brain-network relative w-80 h-80 mx-auto">
+            <div className="qr-network relative w-80 h-80 mx-auto">
               
-              {/* Central brain core */}
+              {/* Central QR Code */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-32 h-32 rounded-full bg-gradient-ai opacity-20 animate-pulse" />
-                <div className="absolute w-24 h-24 rounded-full bg-electric-blue/30 animate-ping" />
-                <div className="absolute w-16 h-16 rounded-full bg-cyan-glow/50" />
-                <Brain className="absolute w-12 h-12 text-electric-blue animate-pulse" />
+                <div className="relative">
+                  {/* QR Code Pattern */}
+                  <div className="qr-code-grid w-32 h-32 bg-background/90 border-2 border-electric-blue/50 rounded-lg overflow-hidden">
+                    <div className="grid grid-cols-8 gap-0.5 p-2 h-full">
+                      {[...Array(64)].map((_, i) => (
+                        <div
+                          key={i}
+                          className={`bg-electric-blue transition-all duration-500 ${
+                            [0, 2, 6, 7, 8, 14, 16, 17, 22, 23, 24, 25, 31, 32, 39, 40, 41, 46, 47, 48, 49, 54, 55, 56, 57, 63].includes(i)
+                              ? 'opacity-100 animate-pulse' 
+                              : 'opacity-30'
+                          }`}
+                          style={{ animationDelay: `${i * 0.05}s` }}
+                        />
+                      ))}
+                    </div>
+                    {/* Scanning line animation */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-electric-blue/50 to-transparent h-1 animate-qr-scan" />
+                  </div>
+                  
+                  {/* AI Processing Ring */}
+                  <div className="absolute -inset-4 border-2 border-dashed border-cyan-glow/60 rounded-full animate-spin-slow" />
+                  <div className="absolute -inset-8 border border-purple-accent/40 rounded-full animate-pulse" />
+                </div>
               </div>
 
-              {/* Neural network connections */}
+              {/* Network Connection Lines */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 320 320">
                 <defs>
-                  <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <linearGradient id="networkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="hsl(var(--electric-blue))" />
                     <stop offset="50%" stopColor="hsl(var(--cyan-glow))" />
                     <stop offset="100%" stopColor="hsl(var(--purple-accent))" />
                   </linearGradient>
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge> 
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
                 </defs>
 
-                {/* Neural pathways */}
-                {[...Array(12)].map((_, i) => {
-                  const angle = (i * 30) * Math.PI / 180;
-                  const x1 = 160 + Math.cos(angle) * 60;
-                  const y1 = 160 + Math.sin(angle) * 60;
-                  const x2 = 160 + Math.cos(angle) * 120;
-                  const y2 = 160 + Math.sin(angle) * 120;
+                {/* Network Connections */}
+                {[...Array(8)].map((_, i) => {
+                  const angle = (i * 45) * Math.PI / 180;
+                  const x1 = 160 + Math.cos(angle) * 70;
+                  const y1 = 160 + Math.sin(angle) * 70;
+                  const x2 = 160 + Math.cos(angle) * 130;
+                  const y2 = 160 + Math.sin(angle) * 130;
                   
                   return (
                     <g key={i}>
@@ -162,42 +189,83 @@ const CompanySection = () => {
                         y1={y1}
                         x2={x2}
                         y2={y2}
-                        stroke="url(#brainGradient)"
+                        stroke="url(#networkGradient)"
                         strokeWidth="2"
+                        filter="url(#glow)"
                         className="circuit-line"
+                        style={{ animationDelay: `${i * 0.3}s` }}
+                      />
+                      {/* Network Nodes (Mini QR Codes) */}
+                      <rect
+                        x={x2 - 8}
+                        y={y2 - 8}
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="hsl(var(--electric-blue))"
+                        strokeWidth="1"
+                        className="animate-pulse"
                         style={{ animationDelay: `${i * 0.2}s` }}
                       />
-                      <circle
-                        cx={x2}
-                        cy={y2}
-                        r="4"
+                      <rect
+                        x={x2 - 6}
+                        y={y2 - 6}
+                        width="4"
+                        height="4"
+                        fill="hsl(var(--cyan-glow))"
+                        className="animate-pulse"
+                        style={{ animationDelay: `${i * 0.2}s` }}
+                      />
+                      <rect
+                        x={x2 + 2}
+                        y={y2 - 6}
+                        width="4"
+                        height="4"
                         fill="hsl(var(--electric-blue))"
                         className="animate-pulse"
-                        style={{ animationDelay: `${i * 0.1}s` }}
+                        style={{ animationDelay: `${i * 0.2 + 0.1}s` }}
+                      />
+                      <rect
+                        x={x2 - 6}
+                        y={y2 + 2}
+                        width="4"
+                        height="4"
+                        fill="hsl(var(--purple-accent))"
+                        className="animate-pulse"
+                        style={{ animationDelay: `${i * 0.2 + 0.2}s` }}
                       />
                     </g>
                   );
                 })}
 
-                {/* Orbiting data nodes */}
-                {[...Array(6)].map((_, i) => {
-                  const angle = (i * 60) * Math.PI / 180;
-                  const x = 160 + Math.cos(angle) * 140;
-                  const y = 160 + Math.sin(angle) * 140;
+                {/* Data Flow Particles */}
+                {[...Array(16)].map((_, i) => {
+                  const angle = (i * 22.5) * Math.PI / 180;
+                  const radius = 100 + (i % 3) * 20;
+                  const x = 160 + Math.cos(angle) * radius;
+                  const y = 160 + Math.sin(angle) * radius;
                   
                   return (
                     <circle
-                      key={`orbit-${i}`}
+                      key={`particle-${i}`}
                       cx={x}
                       cy={y}
-                      r="6"
+                      r="2"
                       fill="hsl(var(--cyan-glow))"
                       className="data-point"
-                      style={{ animationDelay: `${i * 0.3}s` }}
+                      style={{ animationDelay: `${i * 0.1}s` }}
                     />
                   );
                 })}
               </svg>
+
+              {/* AI Processing Indicators */}
+              <div className="absolute top-4 left-4 text-xs text-electric-blue font-mono opacity-70">
+                <div className="animate-pulse">AI PROCESSING...</div>
+              </div>
+              <div className="absolute bottom-4 right-4 text-xs text-cyan-glow font-mono opacity-70">
+                <div className="animate-pulse">NETWORK SYNC</div>
+              </div>
 
               {/* Holographic overlay */}
               <div className="absolute inset-0 bg-gradient-to-r from-electric-blue/5 via-transparent to-cyan-glow/5 rounded-full animate-pulse" />
